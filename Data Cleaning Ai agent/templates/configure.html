@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Configure Cleaning Strategies - Data Cleaning AI Agent{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-3">
+    <div class="col-lg-9">
+        <!-- Header Banner -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <span class="badge bg-warning-soft text-warning-light px-3 py-1.5 rounded-pill mb-2">Step 3 of 4 &bull; Decision Engine</span>
+                <h2 class="fw-bold mb-1">Configure Cleaning Strategies</h2>
+                <p class="text-muted small mb-0">Select custom rules or use the agent's recommended defaults.</p>
+            </div>
+            <a href="{{ url_for('analyze') }}" class="btn btn-outline-secondary rounded-pill px-4">
+                <i class="bi bi-arrow-left me-1"></i> Back to Analysis
+            </a>
+        </div>
+
+        <form action="{{ url_for('clean_dataset') }}" method="POST">
+            <!-- Card 1: Missing Numerical Imputation -->
+            <div class="glass-card p-4 mb-4">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="icon-circle bg-primary-soft text-primary fs-5">
+                        <i class="bi bi-calculator"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-0">Missing Numerical Values Strategy</h6>
+                        <p class="text-muted extra-small mb-0">Choose how to impute missing numbers in numeric columns.</p>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="form-check custom-radio-card p-3 rounded-3 h-100">
+                            <input class="form-check-input" type="radio" name="numeric_missing_strategy" id="num_median" value="median" checked>
+                            <label class="form-check-label w-100 cursor-pointer" for="num_median">
+                                <span class="fw-bold d-block mb-1 text-light">Median Imputation <span class="badge bg-success-subtle text-success fs-8">Recommended</span></span>
+                                <span class="text-muted small">Fills missing values using the median. Highly robust against extreme outliers.</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check custom-radio-card p-3 rounded-3 h-100">
+                            <input class="form-check-input" type="radio" name="numeric_missing_strategy" id="num_mean" value="mean">
+                            <label class="form-check-label w-100 cursor-pointer" for="num_mean">
+                                <span class="fw-bold d-block mb-1 text-light">Mean Imputation</span>
+                                <span class="text-muted small">Fills missing values using the arithmetic average. Best for symmetric distributions.</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check custom-radio-card p-3 rounded-3 h-100">
+                            <input class="form-check-input" type="radio" name="numeric_missing_strategy" id="num_none" value="none">
+                            <label class="form-check-label w-100 cursor-pointer" for="num_none">
+                                <span class="fw-bold d-block mb-1 text-light">Do Not Modify</span>
+                                <span class="text-muted small">Leaves numerical missing values untouched as NaN.</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Missing Categorical Imputation -->
+            <div class="glass-card p-4 mb-4">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="icon-circle bg-info-soft text-info fs-5">
+                        <i class="bi bi-tags"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-0">Missing Categorical Values Strategy</h6>
+                        <p class="text-muted extra-small mb-0">Choose how to fill missing text and category entries.</p>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="form-check custom-radio-card p-3 rounded-3 h-100">
+                            <input class="form-check-input" type="radio" name="categorical_missing_strategy" id="cat_mode" value="mode" checked>
+                            <label class="form-check-label w-100 cursor-pointer" for="cat_mode">
+                                <span class="fw-bold d-block mb-1 text-light">Mode Imputation <span class="badge bg-success-subtle text-success fs-8">Recommended</span></span>
+                                <span class="text-muted small">Replaces missing text values with the most frequently occurring value.</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check custom-radio-card p-3 rounded-3 h-100">
+                            <input class="form-check-input" type="radio" name="categorical_missing_strategy" id="cat_unknown" value="unknown">
+                            <label class="form-check-label w-100 cursor-pointer" for="cat_unknown">
+                                <span class="fw-bold d-block mb-1 text-light">Label as "Unknown"</span>
+                                <span class="text-muted small">Fills missing categorical cells with an explicit string label "Unknown".</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check custom-radio-card p-3 rounded-3 h-100">
+                            <input class="form-check-input" type="radio" name="categorical_missing_strategy" id="cat_none" value="none">
+                            <label class="form-check-label w-100 cursor-pointer" for="cat_none">
+                                <span class="fw-bold d-block mb-1 text-light">Do Not Modify</span>
+                                <span class="text-muted small">Leaves categorical missing values blank.</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Outlier Handling -->
+            <div class="glass-card p-4 mb-4">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="icon-circle bg-warning-soft text-warning fs-5">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-0">Numerical Outlier Strategy</h6>
+                        <p class="text-muted extra-small mb-0">Specify how the agent should handle values beyond 1.5 &times; IQR.</p>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="form-check custom-radio-card p-3 rounded-3 h-100">
+                            <input class="form-check-input" type="radio" name="outlier_strategy" id="outlier_detect" value="detect_only" checked>
+                            <label class="form-check-label w-100 cursor-pointer" for="outlier_detect">
+                                <span class="fw-bold d-block mb-1 text-light">Detect & Report Only <span class="badge bg-success-subtle text-success fs-8">Default & Safe</span></span>
+                                <span class="text-muted small">Flags outliers in the report without modifying or deleting data values.</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check custom-radio-card p-3 rounded-3 h-100">
+                            <input class="form-check-input" type="radio" name="outlier_strategy" id="outlier_cap" value="cap">
+                            <label class="form-check-label w-100 cursor-pointer" for="outlier_cap">
+                                <span class="fw-bold d-block mb-1 text-light">Cap / Winsorize Outliers</span>
+                                <span class="text-muted small">Clamps extreme outliers to the upper/lower IQR threshold boundaries.</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check custom-radio-card p-3 rounded-3 h-100">
+                            <input class="form-check-input" type="radio" name="outlier_strategy" id="outlier_remove" value="remove">
+                            <label class="form-check-label w-100 cursor-pointer" for="outlier_remove">
+                                <span class="fw-bold d-block mb-1 text-light">Remove Outlier Rows</span>
+                                <span class="text-muted small">Drops rows containing extreme numerical outliers entirely.</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Additional Cleaning Toggles -->
+            <div class="glass-card p-4 mb-4">
+                <h6 class="fw-bold mb-3"><i class="bi bi-check2-square text-success me-2"></i> Additional Cleaning Operations</h6>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-check custom-checkbox-card p-3 rounded-3">
+                            <input class="form-check-input" type="checkbox" name="remove_duplicates" id="chk_dup" checked>
+                            <label class="form-check-label cursor-pointer ms-2 fw-medium text-light" for="chk_dup">
+                                Deduplicate Rows <span class="text-muted small d-block">Remove exact duplicate rows, keeping first occurrence.</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check custom-checkbox-card p-3 rounded-3">
+                            <input class="form-check-input" type="checkbox" name="trim_whitespace" id="chk_trim" checked>
+                            <label class="form-check-label cursor-pointer ms-2 fw-medium text-light" for="chk_trim">
+                                Normalize Text & Trim Whitespace <span class="text-muted small d-block">Strip leading/trailing spaces and collapse extra spaces.</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check custom-checkbox-card p-3 rounded-3">
+                            <input class="form-check-input" type="checkbox" name="standardize_dates" id="chk_date" checked>
+                            <label class="form-check-label cursor-pointer ms-2 fw-medium text-light" for="chk_date">
+                                Standardize Date Formatting <span class="text-muted small d-block">Convert heterogeneous date text formats into ISO (YYYY-MM-DD).</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check custom-checkbox-card p-3 rounded-3">
+                            <input class="form-check-input" type="checkbox" name="convert_numeric_strings" id="chk_num_str" checked>
+                            <label class="form-check-label cursor-pointer ms-2 fw-medium text-light" for="chk_num_str">
+                                Convert Numeric Strings & Fix Invalid Values <span class="text-muted small d-block">Convert numeric text to numbers and set invalid domain values to NaN.</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-end mb-5">
+                <button type="submit" class="btn btn-gradient-primary btn-lg rounded-pill px-5 shadow-lg">
+                    <i class="bi bi-play-fill me-2 fs-5"></i> Execute Data Cleaning Agent
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

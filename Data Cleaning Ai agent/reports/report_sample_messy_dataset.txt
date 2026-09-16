@@ -1,0 +1,60 @@
+================================================================================
+                        DATA CLEANING AI AGENT REPORT                           
+================================================================================
+ Dataset Filename  : sample_messy_dataset.csv
+================================================================================
+
+1. DATASET OVERVIEW & BEFORE / AFTER COMPARISON
+--------------------------------------------------------------------------------
+ Metric                   BEFORE              AFTER               CHANGE
+--------------------------------------------------------------------------------
+ Total Rows               50                 50                 0
+ Total Columns            10                 10                 0
+ Missing Values           13                 0                  -13
+ Duplicate Rows           0                  0                  0
+ Numerical Outliers       6                  1                  -5
+--------------------------------------------------------------------------------
+
+2. SUMMARY OF DETECTED DATA-QUALITY PROBLEMS
+--------------------------------------------------------------------------------
+Missing Values by Column:
+  • Age: 7 missing value(s)
+  • Salary: 2 missing value(s)
+  • Rating: 4 missing value(s)
+Numerical Outliers by Column:
+  • Age: 3 outlier(s) detected [bounds: 10.25 to 60.25]
+  • Salary: 1 outlier(s) detected [bounds: 34625.0 to 115625.0]
+  • Rating: 2 outlier(s) detected [bounds: 3.06 to 5.36]
+
+3. CHRONOLOGICAL DATA CLEANING AUDIT LOG
+--------------------------------------------------------------------------------
+  1. No duplicate rows found.
+  2. Trimmed leading/trailing and extra whitespace from 28 cell(s) in column 'Name'.
+  3. Trimmed leading/trailing and extra whitespace from 3 cell(s) in column 'Gender'.
+  4. Trimmed leading/trailing and extra whitespace from 36 cell(s) in column 'City'.
+  5. Flagged and set 3 invalid Age value(s) (e.g., negative or > 120) to NaN for safe imputation.
+  6. Flagged and set 2 invalid Rating value(s) (outside 0-10 range) to NaN for safe imputation.
+  7. Filled 10 missing values in numerical column 'Age' using median = 34.5.
+  8. Filled 2 missing values in numerical column 'Salary' using median = 74500.0.
+  9. Filled 6 missing values in numerical column 'Rating' using median = 4.2.
+  10. Standardized date column 'Join_Date' (50/50 valid dates) to YYYY-MM-DD format.
+  11. Detected 1 potential outlier(s) in column 'Salary' (bounds: [36000.00, 114000.00]). Retained as per conservative rule.
+
+4. AI DATASET QUALITY SUMMARY & EXPLANATION
+--------------------------------------------------------------------------------
+Executive Summary:
+  The uploaded dataset contains 50 rows and 10 columns with an initial Data Quality Score of 97/100. During analysis, the agent detected 13 missing values, 0 duplicate row(s), and 6 numerical outlier(s). Following automated data cleaning, the dataset overall quality score improved to 100/100.
+
+Cleaning Rationale:
+  • Missing Values: Imputed 13 missing cell(s). Numerical columns used median imputation (robust against skewness) while categorical columns used mode imputation.
+• Text Normalization: Stripped leading/trailing whitespace and normalized text fields to eliminate accidental spacing inconsistencies.
+• Date Standardization: Parsed date columns across heterogeneous string formats and standardized them into uniform ISO (YYYY-MM-DD) format.
+• Numerical Outliers: Capped or removed 5 numerical outlier(s) using Interquartile Range (IQR) threshold boundaries.
+
+Recommendations & Limitations:
+  1. Review 1 retained numerical outlier(s) with domain experts before feeding into predictive machine learning models.
+2. Consider dropping constant column(s) [Company] if building machine learning models as they provide zero variance/information.
+3. Verify date conversions for any custom localized formats before downstream analysis.
+================================================================================
+ End of Data Cleaning Agent Report
+================================================================================

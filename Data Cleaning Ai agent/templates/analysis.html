@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block title %}Dataset Analysis - Data Cleaning AI Agent{% endblock %}
+
+{% block content %}
+<!-- Header Banner -->
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+    <div>
+        <span class="badge bg-info-soft text-info-light px-3 py-1.5 rounded-pill mb-2">Step 2 of 4 &bull; Analyzer Agent</span>
+        <h2 class="fw-bold mb-1">Dataset Quality Inspection Dashboard</h2>
+        <p class="text-muted small mb-0">File: <span class="text-light fw-medium">{{ filename }}</span></p>
+    </div>
+    <div class="d-flex gap-2">
+        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary rounded-pill px-4">
+            <i class="bi bi-arrow-left me-1"></i> New Upload
+        </a>
+        <a href="{{ url_for('configure') }}" class="btn btn-gradient-primary rounded-pill px-4 shadow">
+            Configure Cleaning <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+    </div>
+</div>
+
+<!-- KPI Metrics Cards Row -->
+<div class="row g-3 mb-4">
+    <!-- Quality Score Gauge -->
+    <div class="col-6 col-lg-2.4">
+        <div class="glass-card p-3 h-100 text-center position-relative overflow-hidden">
+            <div class="text-muted fs-7 text-uppercase fw-semibold mb-1">Quality Score</div>
+            <div class="display-6 fw-extrabold {% if report.quality_score >= 80 %}text-success{% elif report.quality_score >= 50 %}text-warning{% else %}text-danger{% endif %}">
+                {{ report.quality_score }}<span class="fs-6 text-muted">/100</span>
+            </div>
+            <div class="small text-muted mt-1">Overall Health</div>
+        </div>
+    </div>
+
+    <!-- Rows & Columns -->
+    <div class="col-6 col-lg-2.4">
+        <div class="glass-card p-3 h-100 text-center">
+            <div class="text-muted fs-7 text-uppercase fw-semibold mb-1">Structure</div>
+            <div class="fs-3 fw-bold text-light">{{ report.rows }} <span class="fs-6 text-muted">rows</span></div>
+            <div class="small text-muted">{{ report.columns }} columns</div>
+        </div>
+    </div>
+
+    <!-- Missing Values -->
+    <div class="col-6 col-lg-2.4">
+        <div class="glass-card p-3 h-100 text-center">
+            <div class="text-muted fs-7 text-uppercase fw-semibold mb-1">Missing Values</div>
+            <div class="fs-3 fw-bold {% if report.total_missing > 0 %}text-warning{% else %}text-success{% endif %}">
+                {{ report.total_missing }}
+            </div>
+            <div class="small text-muted">Across all columns</div>
+        </div>
+    </div>
+
+    <!-- Duplicate Rows -->
+    <div class="col-6 col-lg-2.4">
+        <div class="glass-card p-3 h-100 text-center">
+            <div class="text-muted fs-7 text-uppercase fw-semibold mb-1">Duplicates</div>
+            <div class="fs-3 fw-bold {% if report.duplicate_rows > 0 %}text-danger{% else %}text-success{% endif %}">
+                {{ report.duplicate_rows }}
+            </div>
+            <div class="small text-muted">Full duplicate rows</div>
+        </div>
+    </div>
+
+    <!-- Outliers -->
+    <div class="col-6 col-lg-2.4">
+        <div class="glass-card p-3 h-100 text-center">
+            <div class="text-muted fs-7 text-uppercase fw-semibold mb-1">Outliers</div>
+            <div class="fs-3 fw-bold {% if report.total_outliers > 0 %}text-info{% else %}text-success{% endif %}">
+                {{ report.total_outliers }}
+            </div>
+            <div class="small text-muted">IQR bounds method</div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Section -->
+<div class="row g-4 mb-4">
+    <!-- Chart 1: Missing values by column -->
+    <div class="col-lg-8">
+        <div class="glass-card p-4 h-100">
+            <h6 class="fw-bold mb-3"><i class="bi bi-bar-chart-line-fill text-primary me-2"></i> Missing Values Distribution by Column</h6>
+            <div style="height: 260px;">
+                <canvas id="missingChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <!-- Chart 2: Issues Breakdown -->
+    <div class="col-lg-4">
+        <div class="glass-card p-4 h-100">
+            <h6 class="fw-bold mb-3"><i class="bi bi-pie-chart-fill text-warning me-2"></i> Quality Issues Summary</h6>
+            <div style="height: 260px;">
+                <canvas id="issuesPieChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Column Details Table -->
+<div class="glass-card p-4 mb-4">
+    <h6 class="fw-bold mb-3"><i class="bi bi-table text-primary me-2"></i> Column Metadata & Flags</h6>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Column Name</th>
+                    <th>Data Type</th>
+                    <th>Missing Values</th>
+                    <th>Unique Values</th>
+                    <th>Quality Status / Flags</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for col in report.column_names %}
+                <tr>
+                    <td class="fw-medium text-light">{{ col }}</td>
+                    <td><span class="badge bg-secondary-subtle text-secondary font-monospace">{{ report.dtypes[col] }}</span></td>
+                    <td>
+                        {% set miss_cnt = report.missing_by_column[col] %}
+                        {% if miss_cnt > 0 %}
+                            <span class="badge bg-warning-subtle text-warning fw-bold">{{ miss_cnt }} missing</span>
+                        {% else %}
+                            <span class="badge bg-success-subtle text-success">Clean (0)</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ report.unique_counts[col] }}</td>
+                    <td>
+                        {% if col in report.constant_columns %}
+                            <span class="badge bg-danger-subtle text-danger me-1"><i class="bi bi-exclamation-triangle"></i> Constant Column</span>
+                        {% endif %}
+                        {% if col in report.outliers_by_column %}
+                            <span class="badge bg-info-subtle text-info me-1"><i class="bi bi-graph-up-arrow"></i> {{ report.outliers_by_column[col]['count'] }} Outliers</span>
+                        {% endif %}
+                        {% if col in report.date_columns %}
+                            <span class="badge bg-primary-subtle text-primary me-1"><i class="bi bi-calendar-event"></i> Date Field</span>
+                        {% endif %}
+                        {% if col in report.potential_id_columns %}
+                            <span class="badge bg-secondary-subtle text-light me-1"><i class="bi bi-fingerprint"></i> ID Field</span>
+                        {% endif %}
+                        {% if col not in report.constant_columns and col not in report.outliers_by_column and report.missing_by_column[col] == 0 %}
+                            <span class="text-muted small"><i class="bi bi-check2 text-success"></i> No issues</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Raw Dataset Preview -->
+<div class="glass-card p-4 mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-bold mb-0"><i class="bi bi-eye-fill text-primary me-2"></i> Raw Dataset Preview (First 15 Rows)</h6>
+        <span class="badge bg-dark text-muted">Original Upload</span>
+    </div>
+    <div class="table-responsive rounded-3 border border-secondary border-opacity-25" style="max-height: 380px;">
+        {{ preview_html | safe }}
+    </div>
+</div>
+
+<!-- Bottom Navigation Action -->
+<div class="text-end mb-4">
+    <a href="{{ url_for('configure') }}" class="btn btn-gradient-primary btn-lg rounded-pill px-5 shadow">
+        Proceed to Cleaning Configuration <i class="bi bi-arrow-right ms-2"></i>
+    </a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Pass JSON data to JavaScript safely
+    const missingData = {{ report.missing_by_column | tojson }};
+    const totalMissing = {{ report.total_missing }};
+    const totalDups = {{ report.duplicate_rows }};
+    const totalOutliers = {{ report.total_outliers }};
+
+    // Render Missing Values Bar Chart
+    const missingCtx = document.getElementById('missingChart').getContext('2d');
+    new Chart(missingCtx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(missingData),
+            datasets: [{
+                label: 'Missing Count',
+                data: Object.values(missingData),
+                backgroundColor: 'rgba(255, 171, 0, 0.65)',
+                borderColor: 'rgba(255, 171, 0, 1)',
+                borderWidth: 1.5,
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.08)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // Render Quality Issues Pie Chart
+    const pieCtx = document.getElementById('issuesPieChart').getContext('2d');
+    new Chart(pieCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Missing Values', 'Duplicates', 'Outliers'],
+            datasets: [{
+                data: [totalMissing, totalDups, totalOutliers],
+                backgroundColor: [
+                    'rgba(255, 171, 0, 0.75)',
+                    'rgba(255, 61, 113, 0.75)',
+                    'rgba(0, 201, 255, 0.75)'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { color: '#cbd5e1' } }
+            }
+        }
+    });
+</script>
+{% endblock %}

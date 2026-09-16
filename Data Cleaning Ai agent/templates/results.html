@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block title %}Cleaning Results & Comparison - Data Cleaning AI Agent{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-3">
+    <div class="col-lg-10">
+        <!-- Success Header -->
+        <div class="glass-card p-4 mb-4 border-success-subtle position-relative overflow-hidden">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                <div>
+                    <span class="badge bg-success-soft text-success-light px-3 py-1.5 rounded-pill mb-2">
+                        <i class="bi bi-check-circle-fill me-1"></i> Data Cleaning Completed Successfully!
+                    </span>
+                    <h2 class="fw-bold mb-1">Results & Verification Dashboard</h2>
+                    <p class="text-muted small mb-0">File: <span class="text-light fw-medium">{{ filename }}</span></p>
+                </div>
+                <!-- Downloads -->
+                <div class="d-flex gap-2">
+                    <a href="{{ url_for('download_dataset') }}" class="btn btn-gradient-primary rounded-pill px-4 shadow">
+                        <i class="bi bi-download me-1.5"></i> Download Cleaned CSV
+                    </a>
+                    <a href="{{ url_for('download_report') }}" class="btn btn-outline-light rounded-pill px-4">
+                        <i class="bi bi-file-earmark-text me-1.5"></i> Download Report
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Before & After KPI Comparison Row -->
+        <div class="row g-3 mb-4">
+            <!-- Row Count -->
+            <div class="col-6 col-md-3">
+                <div class="glass-card p-3 text-center h-100">
+                    <div class="text-muted fs-7 text-uppercase fw-semibold mb-1">Rows</div>
+                    <div class="d-flex align-items-center justify-content-center gap-2">
+                        <span class="fs-4 fw-bold text-muted text-decoration-line-through">{{ validation.before.rows }}</span>
+                        <i class="bi bi-arrow-right text-primary"></i>
+                        <span class="fs-3 fw-bold text-success">{{ validation.after.rows }}</span>
+                    </div>
+                    <div class="small text-muted mt-1">Final row count</div>
+                </div>
+            </div>
+
+            <!-- Missing Values -->
+            <div class="col-6 col-md-3">
+                <div class="glass-card p-3 text-center h-100">
+                    <div class="text-muted fs-7 text-uppercase fw-semibold mb-1">Missing Values</div>
+                    <div class="d-flex align-items-center justify-content-center gap-2">
+                        <span class="fs-4 fw-bold text-warning">{{ validation.before.total_missing }}</span>
+                        <i class="bi bi-arrow-right text-primary"></i>
+                        <span class="fs-3 fw-bold text-success">{{ validation.after.total_missing }}</span>
+                    </div>
+                    <div class="small text-muted mt-1">Imputed cells</div>
+                </div>
+            </div>
+
+            <!-- Duplicates -->
+            <div class="col-6 col-md-3">
+                <div class="glass-card p-3 text-center h-100">
+                    <div class="text-muted fs-7 text-uppercase fw-semibold mb-1">Duplicates</div>
+                    <div class="d-flex align-items-center justify-content-center gap-2">
+                        <span class="fs-4 fw-bold text-danger">{{ validation.before.duplicates }}</span>
+                        <i class="bi bi-arrow-right text-primary"></i>
+                        <span class="fs-3 fw-bold text-success">{{ validation.after.duplicates }}</span>
+                    </div>
+                    <div class="small text-muted mt-1">Duplicates removed</div>
+                </div>
+            </div>
+
+            <!-- Quality Score Gain -->
+            <div class="col-6 col-md-3">
+                <div class="glass-card p-3 text-center h-100">
+                    <div class="text-muted fs-7 text-uppercase fw-semibold mb-1">Quality Health</div>
+                    <div class="d-flex align-items-center justify-content-center gap-2">
+                        <span class="fs-4 fw-bold text-muted">{{ validation.before.quality_score }}</span>
+                        <i class="bi bi-arrow-right text-primary"></i>
+                        <span class="fs-3 fw-bold text-success">{{ validation.after.quality_score }}<span class="fs-7 text-muted">/100</span></span>
+                    </div>
+                    <div class="small text-success mt-1">+{{ validation.fixed.quality_gain }} pts Gain</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Explanation Card -->
+        <div class="glass-card p-4 mb-4 border-primary-subtle">
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <div class="icon-circle bg-primary-soft text-primary fs-5">
+                    <i class="bi bi-robot"></i>
+                </div>
+                <div>
+                    <h5 class="fw-bold mb-0">AI Data Cleaning Quality Explanation</h5>
+                    <span class="badge bg-secondary-subtle text-muted fs-8">Generated by {{ ai_explanation.mode }}</span>
+                </div>
+            </div>
+
+            <div class="p-3 bg-card-subtle rounded-3 mb-3">
+                <h6 class="fw-bold text-primary mb-1"><i class="bi bi-file-text me-1"></i> Executive Summary</h6>
+                <p class="text-light mb-0">{{ ai_explanation.summary }}</p>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="p-3 bg-card-subtle rounded-3 h-100">
+                        <h6 class="fw-bold text-success mb-2"><i class="bi bi-gear-wide-connected me-1"></i> Cleaning Rationale</h6>
+                        <div class="text-muted small whitespace-pre-line">{{ ai_explanation.explanation }}</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 bg-card-subtle rounded-3 h-100">
+                        <h6 class="fw-bold text-warning mb-2"><i class="bi bi-lightbulb me-1"></i> Recommendations & Limitations</h6>
+                        <div class="text-muted small whitespace-pre-line">{{ ai_explanation.recommendations }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chronological Cleaning Audit Log -->
+        <div class="glass-card p-4 mb-4">
+            <h6 class="fw-bold mb-3"><i class="bi bi-journal-check text-primary me-2"></i> Chronological Agent Audit Log</h6>
+            <div class="timeline p-2">
+                {% for log in logs %}
+                <div class="timeline-item d-flex gap-3 mb-2.5">
+                    <div class="timeline-icon bg-primary-soft text-primary fs-7 rounded-circle d-flex align-items-center justify-content-center" style="width: 28px; height: 28px; min-width: 28px;">
+                        <i class="bi bi-check"></i>
+                    </div>
+                    <div class="timeline-content pt-0.5">
+                        <span class="text-light small fw-medium">{{ log }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Tabbed Before vs After Dataset Preview -->
+        <div class="glass-card p-4 mb-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 gap-2">
+                <h6 class="fw-bold mb-0"><i class="bi bi-segmented-nav me-2 text-primary"></i> Dataset Preview Comparison</h6>
+                <!-- Nav Tabs -->
+                <ul class="nav nav-pills glass-pills gap-2" id="previewTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active rounded-pill px-4 py-1.5 fs-7" id="cleaned-tab" data-bs-toggle="tab" data-bs-target="#cleaned-preview" type="button" role="tab">
+                            <i class="bi bi-stars text-primary me-1"></i> Cleaned Dataset (Final)
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-pill px-4 py-1.5 fs-7" id="original-tab" data-bs-toggle="tab" data-bs-target="#original-preview" type="button" role="tab">
+                            <i class="bi bi-clock-history me-1"></i> Original Raw Dataset
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Tab Contents -->
+            <div class="tab-content" id="previewTabContent">
+                <!-- Cleaned Dataset Preview Tab -->
+                <div class="tab-pane fade show active" id="cleaned-preview" role="tabpanel">
+                    <div class="table-responsive rounded-3 border border-success border-opacity-25" style="max-height: 400px;">
+                        {{ cleaned_preview_html | safe }}
+                    </div>
+                </div>
+
+                <!-- Original Dataset Preview Tab -->
+                <div class="tab-pane fade" id="original-preview" role="tabpanel">
+                    <div class="table-responsive rounded-3 border border-secondary border-opacity-25" style="max-height: 400px;">
+                        {{ original_preview_html | safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <a href="{{ url_for('index') }}" class="btn btn-outline-secondary rounded-pill px-4">
+                <i class="bi bi-arrow-counterclockwise me-1"></i> Clean Another Dataset
+            </a>
+            <div class="d-flex gap-2">
+                <a href="{{ url_for('download_report') }}" class="btn btn-outline-light rounded-pill px-4">
+                    <i class="bi bi-file-earmark-text me-1.5"></i> Download Report (.txt)
+                </a>
+                <a href="{{ url_for('download_dataset') }}" class="btn btn-gradient-primary rounded-pill px-5 shadow-lg">
+                    <i class="bi bi-download me-2"></i> Download Cleaned CSV
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

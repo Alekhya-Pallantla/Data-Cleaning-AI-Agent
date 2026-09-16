@@ -1,0 +1,51 @@
+ID,Name,Age,Gender,City,Salary,Join_Date,Department,Rating,Company
+1, John Doe ,28,Male, New York ,65000,2022-01-15,Engineering,4.5,TechCorp
+2,Jane Smith,32,female,Chicago,72000,12/03/2021,Marketing,4.8,TechCorp
+3, Robert Johnson ,45,MALE, Houston ,85000,2020-07-22,Engineering,3.9,TechCorp
+4,Emily Davis,,Female, New York ,58000,15-May-2023,HR,,TechCorp
+5, Michael Brown ,-5, Male ,Seattle,95000,2019-11-01,Engineering,4.2,TechCorp
+6,Sarah Wilson,29,female, Chicago ,62000,2022-08-10,Marketing,4.1,TechCorp
+7, David Lee ,35,M,Austin,N/A,2021-04-18,Finance,3.7,TechCorp
+8, Lisa Anderson ,41,Female, Houston ,,05/12/2020,Finance,4.6,TechCorp
+9, James Taylor ,28,Male, New York ,65000,2022-01-15,Engineering,4.5,TechCorp
+10,Patricia Martinez,38,female,Chicago,78000,2018-09-30,HR,4.0,TechCorp
+11, Richard White ,52,Male, Seattle ,110000,14-Feb-2017,Engineering,4.9,TechCorp
+12, Jennifer Harris ,,Female, Austin ,67000,2023-02-01,Marketing,3.8,TechCorp
+13,Charles Clark,30,MALE,New York,71000,2021-06-15,Finance,12.0,TechCorp
+14, Amanda Lewis ,26,female, Chicago ,59000,10/11/2022,HR,4.3,TechCorp
+15,Thomas Robinson,48,Male,Houston,92000,2019-03-25,Engineering,4.7,TechCorp
+16, Barbara Walker ,34,Female, Seattle ,75000,2020-10-05,Marketing,N/A,TechCorp
+17, Christopher Hall ,-10, Male ,Austin,82000,01-Jan-2022,Finance,3.6,TechCorp
+18,Elizabeth Allen,31,female, New York ,68000,2022-05-19,HR,4.4,TechCorp
+19, Daniel Young ,,MALE,Chicago,9800000,2017-12-12,Engineering,4.8,TechCorp
+20, Margaret King ,44,Female, Houston ,88000,2019-08-14,Marketing,4.2,TechCorp
+21, John Doe ,28,Male, New York ,65000,2022-01-15,Engineering,4.5,TechCorp
+22,Joseph Wright,37,Male, Seattle ,79000,18/07/2021,Finance,3.9,TechCorp
+23,Dorothy Scott,29,female, Austin ,63000,2023-03-10,HR,4.1,TechCorp
+24, William Green ,42,MALE,Chicago,86000,2020-01-20,Engineering,4.6,TechCorp
+25, Ashley Adams ,,Female, New York ,71000,11-Nov-2021,Marketing,3.7,TechCorp
+26, Brian Baker ,33,Male, Houston ,74000,2021-09-01,Finance,4.0,TechCorp
+27,Nancy Gonzalez,25,female, Seattle ,56000,2023-05-15,HR,4.2,TechCorp
+28, George Nelson ,50,MALE, Austin ,105000,15/04/2018,Engineering,4.9,TechCorp
+29,Sandra Carter,39,Female,Chicago,81000,2019-06-30,Marketing,3.8,TechCorp
+30, Kevin Mitchell ,28,Male, New York ,64000,2022-02-28,Finance,N/A,TechCorp
+31,Donna Perez,46,female, Houston ,90000,2019-01-10,HR,4.5,TechCorp
+32, Edward Roberts ,36,Male, Seattle ,83000,08-Aug-2020,Engineering,4.3,TechCorp
+33,Carol Turner,,Female, Austin ,69000,2022-11-20,Marketing,4.0,TechCorp
+34, Ronald Phillips ,43,MALE,Chicago,87000,2020-03-15,Finance,3.6,TechCorp
+35,Michelle Campbell,30,female, New York ,73000,12/10/2021,HR,4.7,TechCorp
+36, Anthony Parker ,27,Male, Houston ,61000,2023-01-05,Engineering,4.1,TechCorp
+37,Laura Evans,38,Female, Seattle ,77000,2021-05-22,Marketing,3.9,TechCorp
+38, Jason Edwards ,200, Male ,Austin,84000,19-Sep-2019,Finance,-2.0,TechCorp
+39,Sarah Wilson,29,female, Chicago ,62000,2022-08-10,Marketing,4.1,TechCorp
+40,Kimberly Collins,35,female, New York ,76000,2021-08-14,HR,4.4,TechCorp
+41, Frank Stewart ,49,Male, Houston ,97000,2018-11-11,Engineering,4.8,TechCorp
+42,Deborah Sanchez,,Female, Seattle ,66000,04/06/2022,Marketing,3.7,TechCorp
+43, Raymond Morris ,32,MALE, Austin ,72000,2021-12-01,Finance,4.2,TechCorp
+44,Janet Rogers,40,female,Chicago,84000,2020-04-18,HR,4.3,TechCorp
+45, Jack Reed ,28,Male, New York ,63000,2022-09-09,Engineering,4.0,TechCorp
+46,Carolyn Cook,47,Female, Houston ,91000,2019-07-04,Marketing,4.6,TechCorp
+47, Dennis Morgan ,,Male, Seattle ,80000,25-Oct-2020,Finance,N/A,TechCorp
+48,Diane Bell,33,female, Austin ,70000,2022-03-30,HR,4.1,TechCorp
+49, Jerry Murphy ,41,MALE,Chicago,89000,2019-10-15,Engineering,4.5,TechCorp
+50,Heather Bailey,29,Female, New York ,64000,07/01/2023,Marketing,3.8,TechCorp

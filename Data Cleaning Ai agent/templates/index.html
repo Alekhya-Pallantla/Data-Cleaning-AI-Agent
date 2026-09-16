@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Dataset - Data Cleaning AI Agent{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-4">
+    <div class="col-lg-10">
+        <!-- Hero Banner -->
+        <div class="text-center mb-5">
+            <span class="badge bg-primary-soft text-primary-light px-3 py-2 rounded-pill fw-medium mb-3">
+                <i class="bi bi-robot me-1"></i> Autonomous AI Data Preprocessing
+            </span>
+            <h1 class="display-4 fw-extrabold mb-3">
+                Transform Messy Data into <span class="bg-gradient-text">Clean Intelligence</span>
+            </h1>
+            <p class="lead text-muted mx-auto" style="max-width: 650px;">
+                Upload your CSV or Excel dataset. Our AI Agent inspects structure, detects quality defects, applies deterministic cleaning rules, and generates human-readable reports.
+            </p>
+        </div>
+
+        <!-- Upload Glass Card -->
+        <div class="glass-card p-4 p-md-5 mb-5 shadow-lg position-relative overflow-hidden">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-7">
+                    <!-- Drop Zone -->
+                    <form action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data" id="upload-form">
+                        <div class="upload-dropzone p-5 text-center rounded-4 border-dashed cursor-pointer" id="dropzone">
+                            <i class="bi bi-cloud-arrow-up display-2 text-primary mb-3 d-block"></i>
+                            <h5 class="fw-bold mb-2">Drag & Drop your dataset here</h5>
+                            <p class="text-muted small mb-3">Supports CSV, XLSX, and XLS files (Max size: 16MB)</p>
+                            <input type="file" name="dataset" id="file-input" class="d-none" accept=".csv, .xlsx, .xls" required>
+                            <button type="button" class="btn btn-primary rounded-pill px-4 shadow-sm" onclick="document.getElementById('file-input').click()">
+                                <i class="bi bi-folder-check me-2"></i> Browse Computer
+                            </button>
+                            <div id="file-name-display" class="mt-3 fw-medium text-success d-none"></div>
+                        </div>
+                        <div class="mt-4 text-end d-none" id="upload-btn-wrapper">
+                            <button type="submit" class="btn btn-gradient-primary btn-lg rounded-pill px-5">
+                                <i class="bi bi-play-fill me-1"></i> Analyze Dataset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-5 border-start-md ps-md-4">
+                    <div class="p-3 bg-card-subtle rounded-4">
+                        <h6 class="fw-bold text-uppercase text-muted fs-7 tracking-wider mb-3">
+                            <i class="bi bi-lightning-charge-fill text-warning me-1"></i> Quick Demo
+                        </h6>
+                        <p class="small text-muted mb-3">
+                            Want to see the AI agent in action immediately? Try our pre-loaded messy dataset containing missing values, duplicates, outliers, and invalid data.
+                        </p>
+                        <form action="{{ url_for('load_sample') }}" method="POST">
+                            <button type="submit" class="btn btn-outline-light w-100 rounded-pill py-2.5">
+                                <i class="bi bi-journal-code text-primary me-2"></i> Load Messy Sample Dataset
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workflow Pipeline Section -->
+        <h5 class="fw-bold mb-4 text-center">
+            <i class="bi bi-diagram-3 me-2 text-primary"></i> Agent Internal Workflow Pipeline
+        </h5>
+        <div class="row g-3 text-center">
+            <div class="col-6 col-md-3">
+                <div class="glass-card p-3 h-100">
+                    <div class="step-badge mx-auto mb-2">1</div>
+                    <h6 class="fw-bold fs-7 mb-1">Analyzer Agent</h6>
+                    <p class="text-muted extra-small mb-0">Detects nulls, duplicates, outliers & types.</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="glass-card p-3 h-100">
+                    <div class="step-badge mx-auto mb-2">2</div>
+                    <h6 class="fw-bold fs-7 mb-1">Decision Engine</h6>
+                    <p class="text-muted extra-small mb-0">Selects conservative cleaning strategies.</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="glass-card p-3 h-100">
+                    <div class="step-badge mx-auto mb-2">3</div>
+                    <h6 class="fw-bold fs-7 mb-1">Cleaning Agent</h6>
+                    <p class="text-muted extra-small mb-0">Applies imputation & deduplication rules.</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="glass-card p-3 h-100">
+                    <div class="step-badge mx-auto mb-2">4</div>
+                    <h6 class="fw-bold fs-7 mb-1">Validation Agent</h6>
+                    <p class="text-muted extra-small mb-0">Verifies before/after metrics & generates audit log.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

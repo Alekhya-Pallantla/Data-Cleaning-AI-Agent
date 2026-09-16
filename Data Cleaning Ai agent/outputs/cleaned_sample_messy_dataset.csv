@@ -1,0 +1,51 @@
+ID,Name,Age,Gender,City,Salary,Join_Date,Department,Rating,Company
+1,John Doe,28.0,Male,New York,65000.0,2022-01-15,Engineering,4.5,TechCorp
+2,Jane Smith,32.0,female,Chicago,72000.0,2021-12-03,Marketing,4.8,TechCorp
+3,Robert Johnson,45.0,MALE,Houston,85000.0,2020-07-22,Engineering,3.9,TechCorp
+4,Emily Davis,34.5,Female,New York,58000.0,2023-05-15,HR,4.2,TechCorp
+5,Michael Brown,34.5,Male,Seattle,95000.0,2019-11-01,Engineering,4.2,TechCorp
+6,Sarah Wilson,29.0,female,Chicago,62000.0,2022-08-10,Marketing,4.1,TechCorp
+7,David Lee,35.0,M,Austin,74500.0,2021-04-18,Finance,3.7,TechCorp
+8,Lisa Anderson,41.0,Female,Houston,74500.0,2020-05-12,Finance,4.6,TechCorp
+9,James Taylor,28.0,Male,New York,65000.0,2022-01-15,Engineering,4.5,TechCorp
+10,Patricia Martinez,38.0,female,Chicago,78000.0,2018-09-30,HR,4.0,TechCorp
+11,Richard White,52.0,Male,Seattle,110000.0,2017-02-14,Engineering,4.9,TechCorp
+12,Jennifer Harris,34.5,Female,Austin,67000.0,2023-02-01,Marketing,3.8,TechCorp
+13,Charles Clark,30.0,MALE,New York,71000.0,2021-06-15,Finance,4.2,TechCorp
+14,Amanda Lewis,26.0,female,Chicago,59000.0,2022-10-11,HR,4.3,TechCorp
+15,Thomas Robinson,48.0,Male,Houston,92000.0,2019-03-25,Engineering,4.7,TechCorp
+16,Barbara Walker,34.0,Female,Seattle,75000.0,2020-10-05,Marketing,4.2,TechCorp
+17,Christopher Hall,34.5,Male,Austin,82000.0,2022-01-01,Finance,3.6,TechCorp
+18,Elizabeth Allen,31.0,female,New York,68000.0,2022-05-19,HR,4.4,TechCorp
+19,Daniel Young,34.5,MALE,Chicago,9800000.0,2017-12-12,Engineering,4.8,TechCorp
+20,Margaret King,44.0,Female,Houston,88000.0,2019-08-14,Marketing,4.2,TechCorp
+21,John Doe,28.0,Male,New York,65000.0,2022-01-15,Engineering,4.5,TechCorp
+22,Joseph Wright,37.0,Male,Seattle,79000.0,2021-07-18,Finance,3.9,TechCorp
+23,Dorothy Scott,29.0,female,Austin,63000.0,2023-03-10,HR,4.1,TechCorp
+24,William Green,42.0,MALE,Chicago,86000.0,2020-01-20,Engineering,4.6,TechCorp
+25,Ashley Adams,34.5,Female,New York,71000.0,2021-11-11,Marketing,3.7,TechCorp
+26,Brian Baker,33.0,Male,Houston,74000.0,2021-09-01,Finance,4.0,TechCorp
+27,Nancy Gonzalez,25.0,female,Seattle,56000.0,2023-05-15,HR,4.2,TechCorp
+28,George Nelson,50.0,MALE,Austin,105000.0,2018-04-15,Engineering,4.9,TechCorp
+29,Sandra Carter,39.0,Female,Chicago,81000.0,2019-06-30,Marketing,3.8,TechCorp
+30,Kevin Mitchell,28.0,Male,New York,64000.0,2022-02-28,Finance,4.2,TechCorp
+31,Donna Perez,46.0,female,Houston,90000.0,2019-01-10,HR,4.5,TechCorp
+32,Edward Roberts,36.0,Male,Seattle,83000.0,2020-08-08,Engineering,4.3,TechCorp
+33,Carol Turner,34.5,Female,Austin,69000.0,2022-11-20,Marketing,4.0,TechCorp
+34,Ronald Phillips,43.0,MALE,Chicago,87000.0,2020-03-15,Finance,3.6,TechCorp
+35,Michelle Campbell,30.0,female,New York,73000.0,2021-12-10,HR,4.7,TechCorp
+36,Anthony Parker,27.0,Male,Houston,61000.0,2023-01-05,Engineering,4.1,TechCorp
+37,Laura Evans,38.0,Female,Seattle,77000.0,2021-05-22,Marketing,3.9,TechCorp
+38,Jason Edwards,34.5,Male,Austin,84000.0,2019-09-19,Finance,4.2,TechCorp
+39,Sarah Wilson,29.0,female,Chicago,62000.0,2022-08-10,Marketing,4.1,TechCorp
+40,Kimberly Collins,35.0,female,New York,76000.0,2021-08-14,HR,4.4,TechCorp
+41,Frank Stewart,49.0,Male,Houston,97000.0,2018-11-11,Engineering,4.8,TechCorp
+42,Deborah Sanchez,34.5,Female,Seattle,66000.0,2022-04-06,Marketing,3.7,TechCorp
+43,Raymond Morris,32.0,MALE,Austin,72000.0,2021-12-01,Finance,4.2,TechCorp
+44,Janet Rogers,40.0,female,Chicago,84000.0,2020-04-18,HR,4.3,TechCorp
+45,Jack Reed,28.0,Male,New York,63000.0,2022-09-09,Engineering,4.0,TechCorp
+46,Carolyn Cook,47.0,Female,Houston,91000.0,2019-07-04,Marketing,4.6,TechCorp
+47,Dennis Morgan,34.5,Male,Seattle,80000.0,2020-10-25,Finance,4.2,TechCorp
+48,Diane Bell,33.0,female,Austin,70000.0,2022-03-30,HR,4.1,TechCorp
+49,Jerry Murphy,41.0,MALE,Chicago,89000.0,2019-10-15,Engineering,4.5,TechCorp
+50,Heather Bailey,29.0,Female,New York,64000.0,2023-07-01,Marketing,3.8,TechCorp
